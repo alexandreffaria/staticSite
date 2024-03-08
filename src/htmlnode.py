@@ -5,7 +5,7 @@ class HTMLNode:
         self.children = children
         self.props = props
 
-    def toHtml(self):
+    def toHTML(self):
         raise NotImplementedError("Subclass must implement this.")
     
     def propsToHTML(self):
@@ -18,3 +18,19 @@ class HTMLNode:
     
     def __repr__(self) -> str:
         return f"tag: {self.tag}\nvalue: {self.value}\nchildren: {self.children}\nprops: {self.props}"
+    
+class LeafNode(HTMLNode):
+    def __init__(self, tag=None, value=None, children=None, props=None) -> None:
+
+        super().__init__(tag, value, None, props)
+
+    def toHTML(self):
+        if self.value is None: 
+            raise ValueError("Value cannot be None on a LeafNode")
+        if self.tag is None: 
+            return self.value
+        else: 
+            return f"<{self.tag}{super().propsToHTML()}>{self.value}</{self.tag}>"
+        
+    def __repr__(self):
+        return f"LeafNode({self.tag}, {self.value}, {self.props})"
