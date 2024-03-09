@@ -1,6 +1,7 @@
 import unittest
 
 from textnode import *
+from inline_markdown import *
 
 class TestTextNode(unittest.TestCase):
     def test_eq(self):
@@ -63,7 +64,6 @@ class TestSplitNodesDelimiter(unittest.TestCase):
                 TextNode("This is text with a ", "text"),
                 TextNode("code block", "code"),
                 TextNode(" word", "text"),
-                TextNode("i bet ", "text"),
                 TextNode("bold", "bold"),
                 TextNode(" text", "text")
             ]
