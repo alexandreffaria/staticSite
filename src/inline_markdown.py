@@ -6,6 +6,8 @@ from textnode import (
     text_type_code,
 )
 
+import re
+
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
     for node in old_nodes:
@@ -28,3 +30,15 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
 
         new_nodes.extend(split_nodes)
     return new_nodes
+
+def extract_markdown_images(text):
+    match = re.findall(r"!\[(.*?)\]\((.*?)\)", text)
+    if len(match) == 0:
+        raise Exception("Could not find markdown for image")
+    return match
+
+def extract_markdown_links(text):
+    match = re.findall(r"\[(.*?)\]\((.*?)\)", text)
+    if len(match) == 0:
+        raise Exception("Could not find markdown for link")
+    return match
