@@ -96,6 +96,36 @@ class TestMarkdownImageAndLinks(unittest.TestCase):
         with self.assertRaises(Exception):
             extract_markdown_images(text)
 
+    def test_split_image(self):
+        node = TextNode(
+            "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png) bla bla bla",
+            text_type_text,
+        )
+        new_nodes = split_nodes_image([node])
+        expected = [
+            TextNode("This is text with an ", "text", None), 
+            TextNode("image", "image", "https://i.imgur.com/zjjcJKZ.png"), TextNode(" and another " , "text", None), 
+            TextNode("second image", "image", "https://i.imgur.com/3elNhQu.png"), 
+            TextNode(" bla bla bla", "text", None)
+                    ]
+
+        self.assertEqual(new_nodes, expected)
+
+    def test_split_link(self):
+        node = TextNode(
+            "This is text with an [image](https://i.imgur.com/zjjcJKZ.png) and another [second image](https://i.imgur.com/3elNhQu.png) bla bla bla",
+            text_type_text,
+        )
+        new_nodes = split_nodes_link([node])
+        expected = [
+            TextNode("This is text with an ", "text", None), 
+            TextNode("image", "link", "https://i.imgur.com/zjjcJKZ.png"), TextNode(" and another " , "text", None), 
+            TextNode("second image", "link", "https://i.imgur.com/3elNhQu.png"), 
+            TextNode(" bla bla bla", "text", None)
+                    ]
+
+        self.assertEqual(new_nodes, expected)
+
 
 
 if __name__ == "__main__":
