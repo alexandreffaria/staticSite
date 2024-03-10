@@ -71,6 +71,32 @@ class TestSplitNodesDelimiter(unittest.TestCase):
             self.assertEqual(results, expected)
 
 
+class TestMarkdownImageAndLinks(unittest.TestCase):
+    def test_return_image(self):
+        
+        text = "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and ![another](https://i.imgur.com/dfsdkjfd.png)"
+        tuples = extract_markdown_images(text)
+        expected =  [("image", "https://i.imgur.com/zjjcJKZ.png"), ("another", "https://i.imgur.com/dfsdkjfd.png")]
+
+        self.assertEqual(tuples, expected)
+
+    def test_return_links(self):
+        text = "This is text with a [link](https://www.example.com) and [another](https://www.example.com/another)"
+        tuples = extract_markdown_links(text)
+        expected = [("link", "https://www.example.com"), ("another", "https://www.example.com/another")]
+
+        self.assertEqual(tuples, expected)
+
+    def test_raise_error(self):
+        text = "This is text with a link](https://www.example.com) and [another(https://www.example.com/another)"
+        with self.assertRaises(Exception):
+            extract_markdown_links(text)
+
+        text = "This is text with an [image(https://i.imgur.com/zjjcJKZ.png) and another](https://i.imgur.com/dfsdkjfd.png)" 
+        with self.assertRaises(Exception):
+            extract_markdown_images(text)
+
+
 
 if __name__ == "__main__":
     unittest.main()
