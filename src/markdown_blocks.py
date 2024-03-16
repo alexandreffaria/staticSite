@@ -23,9 +23,14 @@ def markdown_to_blocks(markdown):
     return groups
 
 def block_to_block_type(markdown):
-    if markdown.startswith("#"):
-        header = markdown.split(" ")[0]
-        headerSize = len(header)
+    if (
+        markdown.startswith("# ")
+        or markdown.startswith("## ") 
+        or markdown.startswith("### ") 
+        or markdown.startswith("#### ") 
+        or markdown.startswith("##### ") 
+        or markdown.startswith("###### ") 
+        ):
         return block_type_heading
     elif markdown.startswith("```") and markdown.endswith("```"):
         return block_type_code
@@ -52,16 +57,3 @@ def block_to_block_type(markdown):
             return block_type_ordered_list
     else: 
         return block_type_paragraph
-
-markdown = "#### 4th level header"
-print(block_to_block_type(markdown))
-markdown = "```\nThis is a block of code\n```"
-print(block_to_block_type(markdown))
-markdown = "> This is a block of quote\n> this is the second line of a quote"
-print(block_to_block_type(markdown))
-markdown = "* This is a block of unordered_list\n- this is the second line of a unoderered_list"
-print(block_to_block_type(markdown))
-markdown = "1. is a block of ordered_list\n2. is the second line of a oderered_list"
-print(block_to_block_type(markdown))
-markdown = "This is a block of paragraph\n2. is the second line of a paragraph"
-print(block_to_block_type(markdown))
