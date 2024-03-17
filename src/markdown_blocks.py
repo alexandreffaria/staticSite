@@ -1,3 +1,6 @@
+from htmlnode import ParentNode
+from inline_markdown import text_to_textnodes
+
 block_type_paragraph = "paragraph"
 block_type_heading = "heading"
 block_type_code = "code"
@@ -57,3 +60,26 @@ def block_to_block_type(markdown):
             return block_type_ordered_list
     else: 
         return block_type_paragraph
+
+def headingToHtmlNode(markdown):
+
+def paragraphToHtmlNode(markdown):
+    node = LeafNode(
+        "p",
+        markdown,
+        None
+    )
+    return node
+def codeToHtmlNode(markdown):
+    node = LeafNode(
+        "code"
+    )
+def quoteToHtmlNode(markdown):
+
+def unorderedListToHtmlNode(markdown):
+
+def orderedListToHtmlNode(markdown):
+
+
+def markdownToHtmlNode(markdown):
+    pass
