@@ -1,10 +1,18 @@
-from textnode import TextNode
+import os
+import shutil
+from copyStatic import copyRecursively
+
+dir_path_static = "./static"
+dir_path_public = "./public"
 
 def main():
-    firstTry = TextNode("Yoyo", "BOLD", "meulindo.fun")
+    print("Deleting public folder.")
+    if os.path.exists(dir_path_public):
+        shutil.rmtree(dir_path_public)
 
-    print(repr(firstTry))
-
+    print("Copying static files to public dir...")
+    copyRecursively(dir_path_static, dir_path_public)
 
 if __name__ == "__main__":
     main()
+
