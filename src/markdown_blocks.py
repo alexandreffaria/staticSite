@@ -6,8 +6,8 @@ block_type_paragraph = "paragraph"
 block_type_heading = "heading"
 block_type_code = "code"
 block_type_quote = "quote"
-block_type_unordered_list = "unordered_list"
-block_type_ordered_list = "ordered_list"
+block_type_ulist = "unordered_list"
+block_type_olist = "ordered_list"
 
 def markdown_to_blocks(markdown):
     blocks = markdown.split("\n")
@@ -51,16 +51,32 @@ def block_to_block_type(markdown):
             if line.startswith("*") or line.startswith("-"):
                 codeLineCounter += 1
         if len(markdown.split("\n")) == codeLineCounter:
-            return block_type_unordered_list
+            return block_type_ulist
     elif markdown[0] == "1" and markdown[1] == ".":
         countLinesList = 0
         for i, line in enumerate(markdown.split("\n")):
             if int(line[0]) == i+1:
                 countLinesList += 1
         if countLinesList == len(markdown.split("\n")):
-            return block_type_ordered_list
+            return block_type_olist
     else: 
         return block_type_paragraph
+
+def block_to_html_node(block):
+    block_type = block_to_block_type(block)
+    if block_type == block_type_paragraph:
+        return paragraph_to_html_node(block)
+    if block_type == block_type_heading:
+        return heading_to_html_node(block)
+    if block_type == block_type_code:
+        return code_to_html_node(block)
+    if block_type == block_type_olist:
+        return olist_to_html_node(block)
+    if block_type == block_type_ulist:
+        return ulist_to_html_node(block)
+    if block_type == block_type_quote:
+        return quote_to_html_node(block)
+    raise ValueError("Invalid block type")
 
 def markdown_to_hmtl_node(markdown):
     blocks = markdown_to_blocks(markdown)
