@@ -78,7 +78,7 @@ def block_to_html_node(block):
         return quote_to_html_node(block)
     raise ValueError("Invalid block type")
 
-def markdown_to_hmtl_node(markdown):
+def markdown_to_html_node(markdown):
     blocks = markdown_to_blocks(markdown)
     children = []
     for block in blocks:
